@@ -37,7 +37,7 @@
                                         <br>    
                                         <button type="submit" class="btn btn-primary">{{ __('送信する') }}</button>
                         @endif
-                                        <a class="btn btn-primary" href="{{ route('/') }}">{{ __('トップに戻る') }}</a>
+                                        <a class="btn btn-primary" href="{{ route('home') }}">{{ __('トップに戻る') }}</a>
                                     </div>
                                 </div>
                             </form>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -58,8 +59,8 @@ class RegisterController extends Controller
             'name_sei' => ['required', 'string', 'max:20'],
             'name_mei' => ['required', 'string', 'max:20'],
             'nickname' => ['required', 'string', 'max:10'],
-            'gender' => ['required'],
-            'email' => ['required', 'string', 'email', 'max:200', 'unique:members'],
+            'gender' => ['required', 'in:1,2'],
+            'email' => ['required', 'string', 'email', 'max:200', 'unique:members,email,NULL,id,deleted_at,NULL'],
             'password' => ['required', 'string', 'min:8', 'max:20',  'confirmed'],
         ]);
     }
@@ -72,8 +73,8 @@ class RegisterController extends Controller
             'name_sei' => ['required', 'string', 'max:20'],
             'name_mei' => ['required', 'string', 'max:20'],
             'nickname' => ['required', 'string', 'max:10'],
-            'gender' => ['required'],
-            'email' => ['required', 'string', 'email', 'max:200', 'unique:members'],
+            'gender' => ['required', 'in:1,2'],
+            'email' => ['required', 'string', 'email', 'max:200', 'unique:members,email,NULL,id,deleted_at,NULL'],
             'password' => ['required', 'string', 'min:8', 'max:20',  'confirmed'],
         ]);                                                 
         foreach($request->all() as $key => $val){                      
@@ -86,7 +87,7 @@ class RegisterController extends Controller
     {
         // DBインサート
         $member = session()->all(); 
-        Member::create([
+        $member = Member::create([
             'name_sei' => $member['name_sei'],
             'name_mei' => $member['name_mei'],
             'nickname' => $member['nickname'],
@@ -96,11 +97,12 @@ class RegisterController extends Controller
         ]);
         // 登録完了メール送信
         Mail::send(new RegisterMail());
-        return view('auth.complete');   
-    }
+        // Auth::login($member);
+        return view('auth.complete'); 
+    }      
 
-    protected function home()
+    public function home()
     {
-    return view('home');   
-    }                                
-}                                                            
+        return view('home'); 
+    }
+}                                                         

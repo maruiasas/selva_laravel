@@ -6,3 +6,16 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// app.scss
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
+// app.scss
+.fa fa-star {
+    font-size: 24px;
+    color: #f6d643;
+  }
+  
+  .fa fa-star.filled {
+    color: #ffbf00;
+  }

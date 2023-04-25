@@ -6,6 +6,10 @@
 @endsection
 
 @section('content')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-version/dist/jquery-version.min.js"></script>
+<script src="{{ asset('js/my.js') }}"></script>
+
     <div class="container">
         <div class="row">
             <div class="col-8 offset-2">
@@ -23,82 +27,146 @@
                 <form method="POST" action="{{ route('products.confirm') }}" class="p-5" enctype="multipart/form-data">
                     @csrf
 
-                    {{-- 商品名 --}}
-                    <div class="form-group mt-3">
-                        <label for="name">商品名</label>
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('商品名') }}</label>
 
-                    {{-- 商品カテゴリ --}}
-                    <div class="form-group mt-3">
-                        <label for="category">商品カテゴリ</label>
-                        <select name="poduct_category_id" class="custom-select form-control @error('category') is-invalid @enderror">
-                            {{-- 次のパートで実装します --}}
-                        </select>
-                        <select name="product_subcategory_id" class="custom-select form-control @error('category') is-invalid @enderror">
-                            {{-- 次のパートで実装します --}}
-                        </select>
-                        @error('category')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
+                        <div class="col-md-4">
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
 
-                    {{-- 商品写真 --}}
-                    <div>商品画像</div>
-                    <span class="item-image-form image-picker">
-                        <input type="hidden" name="image_1" class="d-none" accept="image/png,image/jpeg,image/gif" id="item-image" />
-                        <label for="item-image" class="d-inline-block" role="button">
-                            <img src="/images/item-image-default.png" style="object-fit: cover; width: 300px; height: 300px;">
-                        </label>
-                    </span>
-
-                    <span class="item-image-form image-picker">
-                        <input type="hidden" name="image_2" class="d-none" accept="image/png,image/jpeg,image/gif" id="item-image" />
-                        <label for="item-image" class="d-inline-block" role="button">
-                            <img src="/images/item-image-default.png" style="object-fit: cover; width: 300px; height: 300px;">
-                        </label>
-                    </span>
-
-                    <span class="item-image-form image-picker">
-                        <input type="hidden" name="image_3" class="d-none" accept="image/png,image/jpeg,image/gif" id="item-image" />
-                        <label for="item-image" class="d-inline-block" role="button">
-                            <img src="/images/item-image-default.png" style="object-fit: cover; width: 300px; height: 300px;">
-                        </label>
-                    </span>
-
-                    <span class="item-image-form image-picker">
-                        <input type="hidden" name="image_4" class="d-none" accept="image/png,image/jpeg,image/gif" id="item-image" />
-                        <label for="item-image" class="d-inline-block" role="button">
-                            <img src="/images/item-image-default.png" style="object-fit: cover; width: 300px; height: 300px;">
-                        </label>
-                    </span>
-                    <!-- @error('item-image')
-                        <div style="color: #E4342E;" role="alert">
-                            <strong>{{ $message }}</strong>
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
-                    @enderror -->
-
-                    {{-- 商品の説明 --}}
-                    <div class="form-group mt-3">
-                        <label for="description">商品の説明</label>
-                        <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" required autocomplete="description" autofocus>{{ old('description') }}</textarea>
-                        @error('description')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
                     </div>
 
-                    <div class="form-group mb-0 mt-3">
-                        <button type="submit" class="btn btn-block btn-secondary">確認画面へ</button>
-                        <button type="button" class="btn btn-block btn-secondary" onclick="location.href='/'">{{ __('トップに戻る') }}</button>
+                    <div class="form-group row">
+                        <label for="product_categories" class="col-md-4 col-form-label text-md-right">{{ __('商品カテゴリ') }}</label>
+
+                        <div class="col-md-4">
+                            <select 
+                                id="product_categories"
+                                name="product_categories"
+                                class="form-control {{ $errors->has('product_categories') ? 'is-invalid' : '' }}">
+
+                                @foreach($product_categories as $id => $name)
+                                    <option value="{{ $id }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <select 
+                                id="product_subcategories"
+                                name="product_subcategories"
+                                class="form-control {{ $errors->has('product_subcategories') ? 'is-invalid' : '' }}">
+                                
+                                <option value="{{ old('product_subcategories') }}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="product_image" class="col-md-4 col-form-label text-md-right">{{ __('商品写真') }}</label>
+                        <div class="col-md-4">
+                            
+                            {{ __('写真1') }}
+                            <div id="image_1" width="200" height="200">
+                                @if($imagePath1)
+                                    <img src="/images/{{ $imagePath1 }}" width="200" height="200">
+                                @endif
+                            </div>
+
+                            <label>
+                                <input type="file" style="display:none;" id="image_1" name="image_1" accept="png, jpeg, ipg, gif" class="form-control @error('image_1') is-invalid @enderror" value="{{ old('image_1') }}">
+                                {{ __('アップロード') }}
+                                
+                                @error('image_1')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </label>  
+                            
+                            <br>
+                            {{ __('写真2') }}
+                            <div id="image_2" width="200" height="200">
+                                @if($imagePath2)
+                                    <img src="/images/{{ $imagePath2 }}" width="200" height="200">
+                                @endif
+                            </div>
+
+                            <label>
+                                <input type="file" style="display:none;" id="image_2" name="image_2" accept="png, jpeg, ipg, gif" class="form-control @error('image_2') is-invalid @enderror" value="{{ old('image_2') }}">
+                                {{ __('アップロード') }}
+                                
+                                @error('image_2')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </label>
+
+                            <br>
+                            {{ __('写真3') }}
+                            <div id="image_3" width="200" height="200">
+                                @if($imagePath3)
+                                    <img src="/images/{{ $imagePath3 }}" width="200" height="200">
+                                @endif
+                            </div>
+
+                            <label>
+                                <input type="file" style="display:none;" id="image_3" name="image_3" accept="png, jpeg, ipg, gif" class="form-control @error('image_3') is-invalid @enderror" value="{{ old('image_3') }}">
+                                {{ __('アップロード') }}
+                                
+                                @error('image_3')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </label>
+
+                            <br>
+                            {{ __('写真4') }}
+                            <div id="image_4" width="200" height="200">
+                                @if($imagePath4)
+                                    <img src="/images/{{ $imagePath4 }}" width="200" height="200">
+                                @endif
+                            </div>
+
+                            <label>
+                                <input type="file" style="display:none;" id="image_4" name="image_4" accept="png, jpeg, ipg, gif" class="form-control @error('image_4') is-invalid @enderror" value="{{ old('image_4') }}">
+                                {{ __('アップロード') }}
+                                
+                                @error('image_4')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="product_content" class="col-md-4 col-form-label text-md-right">{{ __('商品の説明') }}</label>
+
+                        <div class="col-md-4">
+                            <input id="product_content" type="text" class="form-control @error('product_content') is-invalid @enderror" name="product_content" value="{{ old('product_content') }}" required autocomplete="product_content">
+
+                            @error('product_content')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-5 mt-5" style="display:flex; justify-content:center;">
+                        <button type="submit" class="btn btn-primary col-md-4">{{ __('確認画面へ') }}</button>
+                    </div>
+                    <div class="form-group mb-5 mt-5" style="display:flex; justify-content:center;">
+                        <button type="button" class="btn btn-block btn-secondary col-md-4" onclick="history.back();">{{ __('トップに戻る') }}</button>
                     </div>
                 </form>
             </div>

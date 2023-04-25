@@ -11,15 +11,19 @@
                     </div>
 
                     <div class="card-body">
-                    <form method="POST" action="{{ route('home') }}">
-                        @csrf
-                        <div class="form-group row mb-6">
-                            <div class="col-md-6 offset-md-5">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('トップに戻る') }}
-                                </button>
-                            </div>
-                        </div>          
-                    </form>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <div class="form-group row mb-6">
+                                <div class="col-md-6 offset-md-5">
+                                    <button type="submit" class="btn btn-primary">{{ __('トップに戻る') }}</button>
+                                </div>
+                            </div>          
+                        </form>
                     </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

@@ -50,8 +50,8 @@
                             <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('性別') }}</label>
 
                             <div class="col-md-4">
-                                <input id="gender" type="radio" class="form-control @error('gender') is-invalid @enderror" name="gender" required autocomplete="new-gender" value="1">男性
-                                <input id="gender" type="radio" class="form-control @error('gender') is-invalid @enderror" name="gender" required autocomplete="new-gender" value="2">女性
+                                <input id="gender" type="radio" class="form-control @error('gender') is-invalid @enderror" name="gender" required autocomplete="new-gender" value="1" {{ old('gender') == '1' ? 'checked' : '' }}>男性
+                                <input id="gender" type="radio" class="form-control @error('gender') is-invalid @enderror" name="gender" required autocomplete="new-gender" value="2" {{ old('gender') == '2' ? 'checked' : '' }}>女性
                                 
                                 @error('gender')
                                     <span class="invalid-feedback" role="alert">
