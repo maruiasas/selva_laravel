@@ -5,11 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use App\Product;
+use App\ProductCategory;
+use Kyslik\ColumnSortable\Sortable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductSubcategory extends Model
 {
-
     use Notifiable;
+    use SoftDeletes;
+    use Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +21,7 @@ class ProductSubcategory extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'name',
+        'product_category_id', 'name',
     ];
 
         /**

@@ -58,12 +58,12 @@
             <input type="hidden" id="product_id" name="product_id" value="{{ $product_id }} ">
             
             <div class="form-group row">
-                <label for="product_content" class="col-md-6 col-form-label text-md-right">{{ __('商品評価：') }}
+                <label for="evaluation" class="col-md-6 col-form-label text-md-right">{{ __('商品評価：') }}
                 {{ $post['evaluation'] }}</label>
             </div>
 
             <div class="form-group row">
-                <label for="product_content" class="col-md-8 col-form-label text-md-right">{{ __('商品コメント：') }}
+                <label for="comment" class="col-md-8 col-form-label text-md-right">{{ __('商品コメント：') }}
                     {{ $post['comment'] }}</label>
             </div>
 

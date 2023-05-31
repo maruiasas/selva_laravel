@@ -11,7 +11,7 @@
             <div class="col-8 offset-2 bg-white">
                 <div class="font-weight-bold text-center pb-3 pt-3" style="font-size: 24px">商品詳細
                     <div class="font-weight-bold text-right border-bottom pb-3 pt-3" style="font-size: 12px">
-                        <button type="button" class="btn btn-primary col-md-2" onclick="location.href='/products/list'">{{ __('トップに戻る') }}</button>
+                        <button type="button" class="btn btn-primary col-md-2" onclick="location.href='/'">{{ __('トップに戻る') }}</button>
                     </div>
                 </div>
 
@@ -62,7 +62,7 @@
                 @endauth
 
                 <div class="form-group mb-5 mt-5" style="display:flex; justify-content:center;">
-                    <button type="button" class="btn btn-block btn-secondary col-md-4" onclick="history.back();">{{ __('商品一覧に戻る') }}</button>
+                    <button type="button" class="btn btn-block btn-secondary col-md-4" onclick="location.href='/products/list'">{{ __('商品一覧に戻る') }}</button>
                 </div>
             </div>
         </div>

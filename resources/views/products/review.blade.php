@@ -29,7 +29,7 @@
             <div class="col-8 offset-2 bg-white">
                 <div class="font-weight-bold text-center pb-3 pt-3" style="font-size: 24px">商品レビュー一覧
                     <div class="font-weight-bold text-right pb-3 pt-3" style="font-size: 12px">
-                        <button type="button" class="btn btn-primary col-md-2" onclick="location.href='/products/list'">{{ __('トップに戻る') }}</button>
+                        <button type="button" class="btn btn-primary col-md-2" onclick="location.href='/'">{{ __('トップに戻る') }}</button>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,9 @@
                 @foreach ($reviews as $review)
                     <tr>
                         <td>
-                            {{ $review->members->nickname }}さん
+                            @if(isset($review->members->nickname))  
+                                {{ $review->members->nickname }}さん
+                            @endif
                         </td>
                         <td>
                         @for ($i = 1; $i <= 5; $i++)
@@ -80,7 +82,7 @@
         </div>
         
         <div class="form-group mb-0 mt-5" style="display:flex; justify-content:center;">
-            <button type="button" class="btn btn-block btn-secondary col-md-4" onclick="history.back();">{{ __('商品詳細に戻る') }}</button>
+            <button type="button" class="btn btn-block btn-secondary col-md-4" onclick="location.href='{{ route('products.show', ['id'=>$product->id]) }}'">{{ __('商品詳細に戻る') }}</button>
         </div>    
     </div>
 @endsection

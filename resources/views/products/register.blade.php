@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('title')
@@ -11,16 +10,6 @@
 <script src="{{ asset('js/my.js') }}"></script>
 
     <div class="container">
-        <div class="row">
-            <div class="col-8 offset-2">
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-8 offset-2 bg-white">
                 <div class="font-weight-bold text-center border-bottom pb-3 pt-3" style="font-size: 24px">商品登録</div>
@@ -49,10 +38,16 @@
                                 id="product_categories"
                                 name="product_categories"
                                 class="form-control {{ $errors->has('product_categories') ? 'is-invalid' : '' }}">
-
+                                
                                 @foreach($product_categories as $id => $name)
-                                    <option value="{{ $id }}">{{ $name }}</option>
+                                    <option value="{{ $id }}" {{ old('product_categories') == $id ? 'selected' : ''}}>{{ $name }}</option>
                                 @endforeach
+                                
+                                @error('product_categories')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </select>
                         </div>
 
@@ -61,90 +56,104 @@
                                 id="product_subcategories"
                                 name="product_subcategories"
                                 class="form-control {{ $errors->has('product_subcategories') ? 'is-invalid' : '' }}">
-                                
-                                <option value="{{ old('product_subcategories') }}"></option>
+
+                                @foreach($product_subcategories as $id => $name)
+                                    <option value="{{ $id }}" {{ old('product_subcategories') == $id ? 'selected' : ''}}>{{ $name }}</option>
+                                @endforeach
+
+                                @error('product_subcategories')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </select>
                         </div>
                     </div>
-
+                    
                     <div class="form-group row">
                         <label for="product_image" class="col-md-4 col-form-label text-md-right">{{ __('商品写真') }}</label>
                         <div class="col-md-4">
                             
                             {{ __('写真1') }}
-                            <div id="image_1" width="200" height="200">
-                                @if($imagePath1)
-                                    <img src="/images/{{ $imagePath1 }}" width="200" height="200">
+                            <div id="image_1">
+                                <div id="image_1">
+                                @if(old('image_1'))
+                                    <img src="/images/{{ $imagePath2 }}" width="200" height="200">
                                 @endif
-                            </div>
-
-                            <label>
-                                <input type="file" style="display:none;" id="image_1" name="image_1" accept="png, jpeg, ipg, gif" class="form-control @error('image_1') is-invalid @enderror" value="{{ old('image_1') }}">
-                                {{ __('アップロード') }}
-                                
-                                @error('image_1')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </label>  
+                                </div>
+                                <label>
+                                    <input type="file" style="display:none;" id="image_1" name="image_1" accept="png, jpeg, ipg, gif" class="form-control @error('image_1') is-invalid @enderror" value="{{ old('image_1') }}">
+                                    {{ __('アップロード') }}
+                                    
+                                    @error('image_1')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </label>
+                            </div>    
                             
                             <br>
                             {{ __('写真2') }}
-                            <div id="image_2" width="200" height="200">
-                                @if($imagePath2)
+                            <div id="image_2">
+                                <div id="image_2">
+                                @if(isset($imagePath2))
                                     <img src="/images/{{ $imagePath2 }}" width="200" height="200">
                                 @endif
+                                </div>
+                                <label>
+                                    <input type="file" style="display:none;" id="image_2" name="image_2" accept="png, jpeg, ipg, gif" class="form-control @error('image_2') is-invalid @enderror" value="{{ old('image_2') }}">
+                                    {{ __('アップロード') }}
+                                    
+                                    @error('image_2')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </label>
                             </div>
-
-                            <label>
-                                <input type="file" style="display:none;" id="image_2" name="image_2" accept="png, jpeg, ipg, gif" class="form-control @error('image_2') is-invalid @enderror" value="{{ old('image_2') }}">
-                                {{ __('アップロード') }}
-                                
-                                @error('image_2')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </label>
 
                             <br>
                             {{ __('写真3') }}
-                            <div id="image_3" width="200" height="200">
-                                @if($imagePath3)
+                            <div id="image_3">
+                                <div id="image_3">
+                                @if(isset($imagePath3))
                                     <img src="/images/{{ $imagePath3 }}" width="200" height="200">
                                 @endif
-                            </div>
+                                </div>
 
-                            <label>
-                                <input type="file" style="display:none;" id="image_3" name="image_3" accept="png, jpeg, ipg, gif" class="form-control @error('image_3') is-invalid @enderror" value="{{ old('image_3') }}">
-                                {{ __('アップロード') }}
-                                
-                                @error('image_3')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </label>
+                                <label>
+                                    <input type="file" style="display:none;" id="image_3" name="image_3" accept="png, jpeg, ipg, gif" class="form-control @error('image_3') is-invalid @enderror" value="{{ old('image_3') }}">
+                                    {{ __('アップロード') }}
+                                    
+                                    @error('image_3')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </label>
+                            </div>
 
                             <br>
                             {{ __('写真4') }}
-                            <div id="image_4" width="200" height="200">
-                                @if($imagePath4)
+                            <div id="image_4">
+                                <div id="image_4">
+                                @if(isset($imagePath4))
                                     <img src="/images/{{ $imagePath4 }}" width="200" height="200">
                                 @endif
-                            </div>
+                                </div>
 
-                            <label>
-                                <input type="file" style="display:none;" id="image_4" name="image_4" accept="png, jpeg, ipg, gif" class="form-control @error('image_4') is-invalid @enderror" value="{{ old('image_4') }}">
-                                {{ __('アップロード') }}
-                                
-                                @error('image_4')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </label>
+                                <label>
+                                    <input type="file" style="display:none;" id="image_4" name="image_4" accept="png, jpeg, ipg, gif" class="form-control @error('image_4') is-invalid @enderror" value="{{ old('image_4') }}">
+                                    {{ __('アップロード') }}
+                                    
+                                    @error('image_4')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </label>
+                            </div>
                         </div>
                     </div>
 
@@ -166,7 +175,7 @@
                         <button type="submit" class="btn btn-primary col-md-4">{{ __('確認画面へ') }}</button>
                     </div>
                     <div class="form-group mb-5 mt-5" style="display:flex; justify-content:center;">
-                        <button type="button" class="btn btn-block btn-secondary col-md-4" onclick="history.back();">{{ __('トップに戻る') }}</button>
+                        <button type="button" class="btn btn-block btn-secondary col-md-4" onclick="location.href='/'">{{ __('トップに戻る') }}</button>
                     </div>
                 </form>
             </div>

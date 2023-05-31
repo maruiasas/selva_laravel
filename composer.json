@@ -11,6 +11,7 @@
         "php": "^7.2.5|^8.0",
         "fideloper/proxy": "^4.4",
         "kalnoy/nestedset": "^5.0",
+        "kyslik/column-sortable": "^6.5",
         "laravel/framework": "^6.20.26",
         "laravel/tinker": "^2.5",
         "laravel/ui": "1.x"

@@ -16,30 +16,46 @@
                     </div>
                 </div>
 
-                <div class="card-body" style="height: 400px;">
-                    <div class="form-group row">
-                        <label for="name" class="col-md-7 col-form-label text-md-right">{{ __('氏名') }} {{ Auth::user()->name_sei }} {{ Auth::user()->name_mei }} </label>
+                <div class="card-body" style="height: 600px;">
+                    <div class="form-group">
+                        <label for="name" class="col-md-7 col-form-label text-md-right">{{ __('氏名：') }} {{ Auth::user()->name_sei }} {{ Auth::user()->name_mei }} </label>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="name" class="col-md-7 col-form-label text-md-right">{{ __('ニックネーム') }} {{ Auth::user()->nickname }}</label>
+                    <div class="form-group">
+                        <label for="name" class="col-md-7 col-form-label text-md-right">{{ __('ニックネーム：') }} {{ Auth::user()->nickname }}</label>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="gender" class="col-md-6 col-form-label text-md-right">{{ __('性別') }}
-                            @if ((Auth::user()->gender === "1")) 男性
+                    <div class="form-group">
+                        <label for="gender" class="col-md-6 col-form-label text-md-right">{{ __('性別：') }}
+                            @if ((Auth::user()->gender == "1")) 男性
                                 @else 女性
                             @endif
                         </label>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="password" class="col-md-8 col-form-label text-md-right">{{ __('パスワード') }} セキュリティのため非表示</label>
+                    <div class="form-group" style="display:flex; justify-content:center;">
+                        <button type="button" class="btn btn-primary col-md-4" onclick="location.href='/update'">{{ __('会員情報変更') }}</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="col-md-8 col-form-label text-md-right">{{ __('パスワード：') }} セキュリティのため非表示</label>
                             <input name="password" type="hidden" value="{{ Auth::user()->password }}">
                     </div>
 
-                    <div class="form-group row">
-                        <label for="email" class="col-md-8 col-form-label text-md-right">{{ __('メールアドレス') }} {{ Auth::user()->email }}</label>
+                    <div class="form-group" style="display:flex; justify-content:center;">
+                        <button type="button" class="btn btn-primary col-md-4" onclick="location.href='/password/change'">{{ __('パスワード変更') }}</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="col-md-8 col-form-label text-md-right">{{ __('メールアドレス：') }} {{ Auth::user()->email }}</label>
+                    </div>
+
+                    <div class="form-group" style="display:flex; justify-content:center;">
+                        <button type="button" class="btn btn-primary col-md-4" onclick="location.href='/email/change'">{{ __('メールアドレス変更') }}</button>
+                    </div>
+
+                    <div class="form-group" style="display:flex; justify-content:center;">
+                        <button type="button" class="btn btn-primary col-md-4" onclick="location.href='/review/master'">{{ __('商品レビュー管理') }}</button>
                     </div>
 
                     @auth

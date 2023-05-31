@@ -16,9 +16,8 @@ $(function () {
     .done(function(data){ // 成功時の処理
 
       $('#product_subcategories option').remove();
-      $('#product_subcategories optgroup').remove();
-      
-        //取得jsonデータ
+
+      //取得jsonデータ
       let data_stringify = JSON.stringify(data);
       let data_json = JSON.parse(data_stringify);
 
@@ -38,23 +37,30 @@ $(function () {
       var selectBox = $('#product_subcategories');
       for (var id in groups) {
         var group = groups[id];
-        var optGroup = $('<optgroup>');
+        var option = $('<option>');
+        var optionText = '';
         for (var i = 0; i < group.length; i++) {
           var name = group[i];
-          optGroup.append($('<option>').text(name));
+          optionText += name;
+          if (i !== group.length - 1) {
+            optionText += ' / ';
+          }
         }
-        selectBox.append(optGroup);
+        option.text(optionText);
+        option.attr('value', id); // value属性を設定
+        selectBox.append(option);
       }
-
-    }).fail(function (data) {
+    })
+    .fail(function (data) {
       // error
       console.log('error');
     });
   });
+});
 
   // 画像アップロードのイベントを検知
   $("[name^='image_']").on('change', function() {
-
+    alert('aaa');
       // csrfをセット
     $.ajaxSetup({
       headers: {
@@ -74,7 +80,7 @@ $(function () {
     // Ajaxリクエストを送信
     $.ajax({
       type: "POST",
-      url: "/products/upload",
+      url: "/members/upload",
       data: formData,
       processData: false,
       contentType: false,
@@ -94,7 +100,6 @@ $(function () {
 
     }).fail(function (data) {
       // error
-      console.log('error');
+      alert('ファイルの容量が大きすぎます');
     });
   });
-})

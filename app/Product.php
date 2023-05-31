@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use App\ProductCategory;
 use App\Review;
+use Kyslik\ColumnSortable\Sortable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use Notifiable;
+    use SoftDeletes;
+    use Sortable;
 
     /**
      * The attributes that are mass assignable.

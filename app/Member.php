@@ -7,12 +7,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Review;
-
+use Kyslik\ColumnSortable\Sortable;
 
 class Member extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use SoftDeletes;
+    use Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -43,7 +44,9 @@ class Member extends Authenticatable implements MustVerifyEmail
 
     protected $dates = ['deleted_at'];
 
-    public function review() {
+    public function reviews() {
         return $this->hasMany(Review::class);
     }
+
+    public $sortable = ['id','created_at'];
 }

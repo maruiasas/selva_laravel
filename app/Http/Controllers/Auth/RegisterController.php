@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Member;
+use App\Administer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -43,6 +44,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('guest:admin');
     }
 
     /**
@@ -97,12 +99,37 @@ class RegisterController extends Controller
         ]);
         // 登録完了メール送信
         Mail::send(new RegisterMail());
-        // Auth::login($member);
+
         return view('auth.complete'); 
     }      
 
     public function home()
     {
         return view('home'); 
+    }
+
+    protected function adminValidator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'loginid' => ['required', 'string', 'max:255', 'unique:adminisiters'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
+
+    public function showAdminRegisterForm()
+    {
+        return view('auth.register', ['authgroup' => 'admin']);
+    }
+
+    protected function createAdmin(Request $request)
+    {
+        $this->adminValidator($request->all())->validate();
+        $admin = Admin::create([
+            'name' => $request['name'],
+            'loginid' => $request['loginid'],
+            'password' => Hash::make($request['password']),
+        ]);
+        return redirect()->intended('login/admin');
     }
 }                                                         

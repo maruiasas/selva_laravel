@@ -5,10 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use App\Product;
+use Kyslik\ColumnSortable\Sortable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\ProductSubcategory;
 
 class ProductCategory extends Model
 {
     use Notifiable;
+    use SoftDeletes;
+    use Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -31,5 +36,9 @@ class ProductCategory extends Model
 
     public function product() {
         return $this->hasMany(Product::class);
+    }
+
+    public function subcategories() {
+        return $this->belongsTo(ProductSubcategory::class, 'id', 'product_category_id');
     }
 }
